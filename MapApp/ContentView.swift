@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  MapApp
-//
-//  Created by Павел Борисевич on 16.02.26.
-//
-
 import SwiftUI
 
 struct ContentView: View {

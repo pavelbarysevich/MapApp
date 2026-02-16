@@ -1,10 +1,3 @@
-//
-//  MapAppApp.swift
-//  MapApp
-//
-//  Created by Павел Борисевич on 16.02.26.
-//
-
 import SwiftUI
 
 @main
