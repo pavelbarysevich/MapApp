@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E6B9BB5A2F43396F0052C5CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B9BB562F43396F0052C5CD /* Assets.xcassets */; };
-		E6B9BB5B2F43396F0052C5CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9BB572F43396F0052C5CD /* ContentView.swift */; };
 		E6B9BB5C2F43396F0052C5CD /* MapAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9BB582F43396F0052C5CD /* MapAppApp.swift */; };
 		E6B9BB622F433A430052C5CD /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9BB612F4339E30052C5CD /* Location.swift */; };
 		E6B9BB672F4435520052C5CD /* LocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9BB662F44351E0052C5CD /* LocationsView.swift */; };
@@ -18,7 +17,6 @@
 /* Begin PBXFileReference section */
 		E6B9BB412F4335C50052C5CD /* MapApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B9BB562F43396F0052C5CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6B9BB572F43396F0052C5CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E6B9BB582F43396F0052C5CD /* MapAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAppApp.swift; sourceTree = "<group>"; };
 		E6B9BB612F4339E30052C5CD /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		E6B9BB662F44351E0052C5CD /* LocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsView.swift; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 				E6B9BB602F4339AE0052C5CD /* ViewModels */,
 				E6B9BB5F2F4339AE0052C5CD /* Models */,
 				E6B9BB562F43396F0052C5CD /* Assets.xcassets */,
-				E6B9BB572F43396F0052C5CD /* ContentView.swift */,
 				E6B9BB582F43396F0052C5CD /* MapAppApp.swift */,
 			);
 			path = MapApp;
@@ -174,7 +171,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6B9BB692F443F3A0052C5CD /* LocationsViewModel.swift in Sources */,
-				E6B9BB5B2F43396F0052C5CD /* ContentView.swift in Sources */,
 				E6B9BB672F4435520052C5CD /* LocationsView.swift in Sources */,
 				E6B9BB622F433A430052C5CD /* Location.swift in Sources */,
 				E6B9BB5C2F43396F0052C5CD /* MapAppApp.swift in Sources */,
