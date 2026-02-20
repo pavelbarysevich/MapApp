@@ -12,6 +12,7 @@
 		E6B9BB622F433A430052C5CD /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9BB612F4339E30052C5CD /* Location.swift */; };
 		E6B9BB672F4435520052C5CD /* LocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9BB662F44351E0052C5CD /* LocationsView.swift */; };
 		E6B9BB692F443F3A0052C5CD /* LocationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9BB682F443F370052C5CD /* LocationsViewModel.swift */; };
+		E6B9BB6B2F470C750052C5CD /* LocationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9BB6A2F470C630052C5CD /* LocationsListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		E6B9BB612F4339E30052C5CD /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		E6B9BB662F44351E0052C5CD /* LocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsView.swift; sourceTree = "<group>"; };
 		E6B9BB682F443F370052C5CD /* LocationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewModel.swift; sourceTree = "<group>"; };
+		E6B9BB6A2F470C630052C5CD /* LocationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -61,6 +63,7 @@
 		E6B9BB552F43396F0052C5CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E6B9BB6A2F470C630052C5CD /* LocationsListView.swift */,
 				E6B9BB662F44351E0052C5CD /* LocationsView.swift */,
 			);
 			path = Views;
@@ -136,11 +139,12 @@
 				};
 			};
 			buildConfigurationList = E6B9BB3C2F4335C50052C5CD /* Build configuration list for PBXProject "MapApp" */;
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = E6B9BB382F4335C50052C5CD;
 			minimizedProjectReferenceProxies = 1;
@@ -172,6 +176,7 @@
 			files = (
 				E6B9BB692F443F3A0052C5CD /* LocationsViewModel.swift in Sources */,
 				E6B9BB672F4435520052C5CD /* LocationsView.swift in Sources */,
+				E6B9BB6B2F470C750052C5CD /* LocationsListView.swift in Sources */,
 				E6B9BB622F433A430052C5CD /* Location.swift in Sources */,
 				E6B9BB5C2F43396F0052C5CD /* MapAppApp.swift in Sources */,
 			);

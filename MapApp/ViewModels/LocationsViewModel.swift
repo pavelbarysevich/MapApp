@@ -8,19 +8,21 @@ import MapKit
     var locations: [Location]
     
     //Текущие место нахождения
-    var mapLocations: Location {
+    var mapLocation: Location {
         didSet {
-            updateMapRedion(location: mapLocations)
+            updateMapRedion(location: mapLocation)
         }
     }
-    
+//Вот текущий регион на карте
     var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
     let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    
+    var showLocationsList: Bool = false
     
     init() {
         let locations = LocationsDataService.locations
         self.locations = locations
-        self.mapLocations = locations.first!
+        self.mapLocation = locations.first!
         self.updateMapRedion(location: locations.first!)
     }
     
@@ -29,6 +31,19 @@ import MapKit
             mapRegion = MKCoordinateRegion(
                 center: location.coordinates,
                 span: mapSpan)
+        }
+    }
+    
+    func toggleLocationsList() {
+        withAnimation(.easeInOut) {
+            showLocationsList = !showLocationsList
+        }
+    }
+    
+    func showNextLocation(location: Location) {
+        withAnimation(.easeInOut) {
+            mapLocation = location
+            showLocationsList = false
         }
     }
 }
