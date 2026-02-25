@@ -1,19 +1,23 @@
-import SwiftUI
-import MapKit
+// Модель данных "Location" описывает точку на карте с названием, городом, координатами,
+// описанием, изображениями и ссылкой. Используется в SwiftUI и MapKit для отображения мест.
+import SwiftUI // Фреймворк для построения пользовательского интерфейса на Swift
+import MapKit // Фреймворк карт; предоставляет типы для работы с координатами и картами
 
-struct Location: Identifiable, Equatable {
-    let name: String
-    let cityName: String
-    let coordinates: CLLocationCoordinate2D
-    let description: String
-    let imageNames: [String]
-    let link: String
+struct Location: Identifiable, Equatable { // Identifiable — для уникальной идентификации в списках; Equatable — для сравнения объектов
+    let name: String                 // Человеческое название локации (например, «Эйфелева башня»)
+    let cityName: String             // Название города, где находится локация (например, «Париж»)
+    let coordinates: CLLocationCoordinate2D // Географические координаты (широта и долгота) для отображения на карте
+    let description: String          // Текстовое описание локации
+    let imageNames: [String]         // Имена изображений в ассетах, связанных с локацией
+    let link: String                 // Внешняя ссылка (например, на сайт или статью с подробностями)
     
-    var id: String {
+    // Уникальный идентификатор для протокола Identifiable. Формируется конкатенацией названия и города.
+    var id: String { // Позволяет SwiftUI отличать элементы списка и обновлять их эффективно
         name + cityName
     }
     
-    static func == (lhs: Location, rhs: Location) -> Bool {
+    // Реализация Equatable: две локации считаются равными, если их уникальные идентификаторы совпадают
+    static func == (lhs: Location, rhs: Location) -> Bool { // Упрощает сравнение и поиск/удаление элементов в коллекциях
         lhs.id == rhs.id
     }
 }
