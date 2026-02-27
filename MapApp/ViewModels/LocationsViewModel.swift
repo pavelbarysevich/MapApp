@@ -19,6 +19,8 @@ import MapKit
     
     var showLocationsList: Bool = false
     
+    var sheetLocation: Location? = nil
+    
     init() {
         let locations = LocationsDataService.locations
         self.locations = locations

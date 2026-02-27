@@ -8,6 +8,9 @@ struct LocationsView: View {
     @State private var cameraPosition: MapCameraPosition = .automatic
     
     var body: some View {
+        
+        @Bindable var vm = vm
+        
         ZStack {
             mapLayer
            
@@ -20,6 +23,9 @@ struct LocationsView: View {
                 
                 locationsPreviewStack
             }
+        }
+        .sheet(item: $vm.sheetLocation, onDismiss: nil) { location in
+            LocationDetailView(location: location)
         }
     }
     
@@ -39,14 +45,14 @@ struct LocationsView: View {
         .ignoresSafeArea()
         .onAppear {
             let center = vm.mapRegion.center
-            let closeSpan = MKCoordinateSpan(latitudeDelta: 0.004, longitudeDelta: 0.004)
+            let closeSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
             let closeRegion = MKCoordinateRegion(center: center, span: closeSpan)
             cameraPosition = .region(closeRegion)
         }
         .onChange(of: RegionProxy(vm.mapRegion)) { _, _ in
             withAnimation(.easeInOut) {
                 let center = vm.mapRegion.center
-                let closeSpan = MKCoordinateSpan(latitudeDelta: 0.004, longitudeDelta: 0.004)
+                let closeSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
                 let closeRegion = MKCoordinateRegion(center: center, span: closeSpan)
                 cameraPosition = .region(closeRegion)
             }
