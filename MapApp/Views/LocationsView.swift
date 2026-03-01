@@ -6,6 +6,7 @@ struct LocationsView: View {
     
     @Environment(LocationsViewModel.self) private var vm: LocationsViewModel
     @State private var cameraPosition: MapCameraPosition = .automatic
+    let maxWidthForIpda: CGFloat = 700
     
     var body: some View {
         
@@ -18,13 +19,14 @@ struct LocationsView: View {
                 
                 header
                     .padding()
+                    .frame(maxWidth: maxWidthForIpda)
                 
                 Spacer()
                 
                 locationsPreviewStack
             }
         }
-        .sheet(item: $vm.sheetLocation, onDismiss: nil) { location in
+        .fullScreenCover(item: $vm.sheetLocation, onDismiss: nil) { location in
             LocationDetailView(location: location)
         }
     }
@@ -65,6 +67,8 @@ struct LocationsView: View {
                     LocationPreviewView(location: location)
                         .shadow(color: .black.opacity(0.3), radius: 20)
                         .padding()
+                        .frame(maxWidth: maxWidthForIpda)
+                        .frame(maxWidth: .infinity)
                         .transition(.asymmetric(
                             insertion: .move(edge: .trailing),
                             removal: .move(edge: .leading)))

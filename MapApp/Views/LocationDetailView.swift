@@ -4,27 +4,33 @@ import MapKit
 struct LocationDetailView: View {
     
     @Environment(LocationsViewModel.self) private var vm: LocationsViewModel
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     @State private var cameraPosition: MapCameraPosition = .automatic
     
+    private let maxWidthForiPad: CGFloat = 700
+    
     let location: Location
+    
+    private var isCompact: Bool { horizontalSizeClass == .compact }
     
     var body: some View {
         GeometryReader { proxy in
+            let contentWidth = isCompact ? proxy.size.width : min(proxy.size.width, maxWidthForiPad)
+            let imageHeight: CGFloat = isCompact ? 400 : min(600, proxy.size.height * 0.45)
+            
             ScrollView {
-                VStack {
-                    imageSection(width: proxy.size.width)
-                        .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
-                    
-                    VStack (alignment: .leading, spacing: 16) {
-                        titleSection
-                        Divider()
-                        descriptionSection
-                        Divider()
-                        mapLayer
+                Group {
+                    if isCompact {
+                        mainContent(width: contentWidth, height: imageHeight)
+                    } else {
+                        HStack(spacing: 0) {
+                            Spacer(minLength: 0)
+                            mainContent(width: contentWidth, height: imageHeight)
+                                .frame(maxWidth: maxWidthForiPad)
+                            Spacer(minLength: 0)
+                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -44,18 +50,37 @@ struct LocationDetailView: View {
 }
 
 extension LocationDetailView {
-    private func imageSection(width: CGFloat) -> some View {
+    @ViewBuilder
+    private func mainContent(width: CGFloat, height: CGFloat) -> some View {
+        VStack {
+            imageSection(width: width, height: height)
+                .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
+            
+            VStack(alignment: .leading, spacing: 16) {
+                titleSection
+                Divider()
+                descriptionSection
+                Divider()
+                mapLayer
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        }
+    }
+    
+    private func imageSection(width: CGFloat, height: CGFloat) -> some View {
         TabView {
             ForEach(location.imageNames, id: \.self) {
                 Image($0)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: width, height: 500)
+                    .frame(width: width, height: height)
                     .clipped()
             }
         }
-        .frame(height: 500)
-        .tabViewStyle(PageTabViewStyle())
+        .frame(width: width, height: height)
+        .tabViewStyle(.page)
+        .cornerRadius(30)
     }
     
     private var titleSection: some View {
@@ -91,7 +116,6 @@ extension LocationDetailView {
                     .shadow(radius: 10)
             }
         }
-        .allowsHitTesting(false)
         .aspectRatio(1, contentMode: .fit)
         .cornerRadius(30)
         .onAppear {
@@ -104,34 +128,6 @@ extension LocationDetailView {
             cameraPosition = .region(region)
         }
     }
-
-//        Map(position: $cameraPosition) {
-//            ForEach(vm.locations) { location in
-//                Annotation(location.name, coordinate: location.coordinates) {
-//                    LocationMapAnnotationView()
-//                        .scaleEffect(vm.mapLocation == location ? 1 : 0.7)
-//                        .shadow(radius: 10)
-//                        .onTapGesture {
-//                            vm.showNextLocation(location: location)
-//                        }
-//                }
-//            }
-//        }
-//        .ignoresSafeArea()
-//        .onAppear {
-//            let center = vm.mapRegion.center
-//            let closeSpan = MKCoordinateSpan(latitudeDelta: 0.004, longitudeDelta: 0.004)
-//            let closeRegion = MKCoordinateRegion(center: center, span: closeSpan)
-//            cameraPosition = .region(closeRegion)
-//        }
-//        .onChange(of: RegionProxy(vm.mapRegion)) { _, _ in
-//            withAnimation(.easeInOut) {
-//                let center = vm.mapRegion.center
-//                let closeSpan = MKCoordinateSpan(latitudeDelta: 0.004, longitudeDelta: 0.004)
-//                let closeRegion = MKCoordinateRegion(center: center, span: closeSpan)
-//                cameraPosition = .region(closeRegion)
-//            }
-//        }
     
     private var backButton: some View {
         Button {
