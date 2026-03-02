@@ -1,3 +1,9 @@
+/*
+ LocationsListView.swift
+ 
+ Этот SwiftUI интерфейс отображает список локаций (городов/мест) из модели LocationsViewModel. Каждая строка списка показывает изображение, название и город выбранной локации. При нажатии на строку вызывается метод выбора локации. 
+*/
+
 import SwiftUI
 
 struct LocationsListView: View {
@@ -46,3 +52,4 @@ extension LocationsListView {
         }
     }
 }
+

@@ -1,3 +1,7 @@
+/// LocationPreviewView — SwiftUI представление превью для локации.
+/// Показывает изображение, название и город, а также две кнопки:
+/// "Узнать больше" открывает подробную информацию, "Далее" переключает на следующее место.
+/// Использует данные и логику из LocationsViewModel через @Environment.
 import SwiftUI
 
 struct LocationPreviewView: View {
@@ -90,3 +94,4 @@ extension LocationPreviewView {
     .environment(LocationsViewModel())
     
 }
+
