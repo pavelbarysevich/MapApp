@@ -95,7 +95,7 @@ import MapKit
     /// В маловероятном случае несоответствия состояния выводим диагностическое сообщение.
     func nextButtonPressed() {
         guard let currentIndex = locations.firstIndex(where: { $0 == mapLocation }) else {
-            print("Could not find current index in locations array! Should never happen.")
+            print("Не удалось найти текущий индекс в массиве местоположений! Никогда не должно случиться.")
             return
         }
         
