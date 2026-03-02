@@ -1,7 +1,9 @@
-// Этот файл содержит сервис данных `LocationsDataService`,
-// который предоставляет статический список туристических локаций
-// (достопримечательностей) для использования в приложении. 
-// Данные включают название, город, координаты, описание, имена изображений и ссылку.
+/// LocationsDataService предоставляет статические данные о популярных туристических местах в виде массива объектов Location.
+/// Каждый Location содержит название, город, координаты, описание, имена изображений и ссылку на дополнительную информацию.
+/// Эти данные могут использоваться в приложении для отображения точек интереса на карте, в списках и подробных представлениях.
+
+import Foundation
+import MapKit
 
 import Foundation // Базовые типы и утилиты из Foundation
 import MapKit // Для работы с географическими координатами (CLLocationCoordinate2D)
@@ -17,11 +19,11 @@ class LocationsDataService {
     static let locations: [Location] = [
         // Локация: Колизей (Рим). Содержит базовую информацию и ресурсы изображений.
         Location(
-            name: "Colosseum", // Название достопримечательности
-            cityName: "Rome", // Город, где расположена локация
-            coordinates: CLLocationCoordinate2D(latitude: 41.8902, longitude: 12.4922), // Географические координаты (широта/долгота)
-            description: "The Colosseum is an oval amphitheatre in the centre of the city of Rome, Italy, just east of the Roman Forum. It is the largest ancient amphitheatre ever built, and is still the largest standing amphitheatre in the world today, despite its age.", // Краткое текстовое описание локации
-            imageNames: [ // Имена локальных изображений (из ассетов) для галереи
+            name: "Колизей",
+            cityName: "Рим",
+            coordinates: CLLocationCoordinate2D(latitude: 41.8902, longitude: 12.4922),
+            description: "Колизей — овальный амфитеатр в центре города Рима, Италия, к востоку от Римского форума. Это самый большой древний амфитеатр, когда-либо построенный, и он до сих пор остается крупнейшим сохранившимся амфитеатром в мире, несмотря на свой возраст.",
+            imageNames: [
                 "rome-colosseum-1",
                 "rome-colosseum-2",
                 "rome-colosseum-3",
@@ -30,11 +32,11 @@ class LocationsDataService {
         
         // Локация: Пантеон (Рим).
         Location(
-            name: "Pantheon", // Название достопримечательности
-            cityName: "Rome", // Город, где расположена локация
-            coordinates: CLLocationCoordinate2D(latitude: 41.8986, longitude: 12.4769), // Географические координаты (широта/долгота)
-            description: "The Pantheon is a former Roman temple and since the year 609 a Catholic church, in Rome, Italy, on the site of an earlier temple commissioned by Marcus Agrippa during the reign of Augustus.", // Краткое текстовое описание локации
-            imageNames: [ // Имена локальных изображений (из ассетов) для галереи
+            name: "Пантеон",
+            cityName: "Рим",
+            coordinates: CLLocationCoordinate2D(latitude: 41.8986, longitude: 12.4769),
+            description: "Пантеон — бывший римский храм, а с 609 года — католическая церковь в Риме, Италия, на месте более раннего храма, построенного по заказу Марка Агриппы во время правления Августа.",
+            imageNames: [
                 "rome-pantheon-1",
                 "rome-pantheon-2",
                 "rome-pantheon-3",
@@ -43,11 +45,11 @@ class LocationsDataService {
         
         // Локация: Фонтан Треви (Рим).
         Location(
-            name: "Trevi Fountain", // Название достопримечательности
-            cityName: "Rome", // Город, где расположена локация
-            coordinates: CLLocationCoordinate2D(latitude: 41.9009, longitude: 12.4833), // Географические координаты (широта/долгота)
-            description: "The Trevi Fountain is a fountain in the Trevi district in Rome, Italy, designed by Italian architect Nicola Salvi and completed by Giuseppe Pannini and several others. Standing 26.3 metres high and 49.15 metres wide, it is the largest Baroque fountain in the city and one of the most famous fountains in the world.", // Краткое текстовое описание локации
-            imageNames: [ // Имена локальных изображений (из ассетов) для галереи
+            name: "Фонтан Треви",
+            cityName: "Рим",
+            coordinates: CLLocationCoordinate2D(latitude: 41.9009, longitude: 12.4833),
+            description: "Фонтан Треви — фонтан в районе Треви в Риме, Италия, спроектированный итальянским архитектором Никола Сальви и завершенный Джузеппе Паннини и некоторыми другими. Его высота 26,3 метра, ширина 49,15 метра, это самый большой фонтан в стиле барокко в городе и один из самых известных фонтанов в мире.",
+            imageNames: [
                 "rome-trevifountain-1",
                 "rome-trevifountain-2",
                 "rome-trevifountain-3",
@@ -56,11 +58,11 @@ class LocationsDataService {
         
         // Локация: Эйфелева башня (Париж).
         Location(
-            name: "Eiffel Tower", // Название достопримечательности
-            cityName: "Paris", // Город, где расположена локация
-            coordinates: CLLocationCoordinate2D(latitude: 48.8584, longitude: 2.2945), // Географические координаты (широта/долгота)
-            description: "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. It is named after the engineer Gustave Eiffel, whose company designed and built the tower. Locally nicknamed 'La dame de fer', it was constructed from 1887 to 1889 as the centerpiece of the 1889 World's Fair and was initially criticized by some of France's leading artists and intellectuals for its design, but it has become a global cultural icon of France and one of the most recognizable structures in the world.", // Краткое текстовое описание локации
-            imageNames: [ // Имена локальных изображений (из ассетов) для галереи
+            name: "Эйфелева башня",
+            cityName: "Париж",
+            coordinates: CLLocationCoordinate2D(latitude: 48.8584, longitude: 2.2945),
+            description: "Эйфелева башня — решетчатая башня из кованого железа на Марсовом поле в Париже, Франция. Она названа в честь инженера Гюстава Эйфеля, компания которого спроектировала и построила башню. Местное прозвище «Дама де Фер» было построено с 1887 по 1889 год в качестве центрального элемента Всемирной выставки 1889 года и первоначально подверглось критике со стороны некоторых ведущих художников и интеллектуалов Франции за свой дизайн, но оно стало глобальной культурной иконой Франции и одним из самых узнаваемых сооружений в мире.",
+            imageNames: [
                 "paris-eiffeltower-1",
                 "paris-eiffeltower-2",
             ],
@@ -68,17 +70,27 @@ class LocationsDataService {
         
         // Локация: Лувр (Париж).
         Location(
-            name: "Louvre Museum", // Название достопримечательности
-            cityName: "Paris", // Город, где расположена локация
-            coordinates: CLLocationCoordinate2D(latitude: 48.8606, longitude: 2.3376), // Географические координаты (широта/долгота)
-            description: "The Louvre, or the Louvre Museum, is the world's most-visited museum and a historic monument in Paris, France. It is the home of some of the best-known works of art, including the Mona Lisa and the Venus de Milo. A central landmark of the city, it is located on the Right Bank of the Seine in the city's 1st arrondissement.", // Краткое текстовое описание локации
-            imageNames: [ // Имена локальных изображений (из ассетов) для галереи
+            name: "Лувр",
+            cityName: "Париж",
+            coordinates: CLLocationCoordinate2D(latitude: 48.8606, longitude: 2.3376),
+            description: "Лувр или Лувр — самый посещаемый музей в мире и исторический памятник в Париже, Франция. Здесь хранятся некоторые из самых известных произведений искусства, в том числе Мона Лиза и Венера Милосская. Центральная достопримечательность города, она расположена на правом берегу Сены в 1-м округе города.",
+            imageNames: [
                 "paris-louvre-1",
                 "paris-louvre-2",
                 "paris-louvre-3",
             ],
-            link: "https://en.wikipedia.org/wiki/Louvre"), // Внешняя ссылка (например, Wikipedia) с дополнительной информацией
+            link: "https://en.wikipedia.org/wiki/Louvre"),
+        Location(
+            name: "Большой театр",
+            cityName: "Беларусь",
+            coordinates: CLLocationCoordinate2D(latitude: 53.91216587024734, longitude: 27.561893455621956),
+            description: "Национальный академический Большой театр оперы и балета Республики Беларусь — единственный оперный театр и крупнейшая театральная сцена страны, расположенная в Минске на площади Парижской Коммуны.",
+            imageNames: [
+                "Bolshoi-Theater-Belarus",
+            ],
+            link: "https://ru.wikipedia.org/wiki/Категория:Оперные_театры_Беларуси"),
     ]
     
     // Примечание: этот набор данных может использоваться для отображения маркеров на карте, списков и подробных экранов.
 }
+

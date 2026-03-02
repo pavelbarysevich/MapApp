@@ -1,9 +1,12 @@
-// LocationsView.swift
-// Экран с картой и списком локаций. Отвечает за:
-// - Отображение карты с текущей областью (регионом)
-// - Синхронизацию положения камеры карты с моделью `LocationsViewModel`
-// - Заголовок с кнопкой для показа/скрытия списка локаций
-// - Превью выбранной локации поверх карты
+/**
+ LocationsView — это основной экран приложения для отображения списка локаций на карте и просмотра их информации.
+ 
+ Основные возможности:
+ - Показывает интерактивную карту с аннотациями для всех локаций.
+ - Позволяет выбирать локацию, просматривать детали и переключаться между ними.
+ - Содержит кнопку-«шапку» для отображения списка всех локаций.
+ - Отображает превью выбранной локации и открывает подробную информацию по клику.
+*/
 
 import SwiftUI
 // MapKit используется для работы с картой и координатами
@@ -12,64 +15,81 @@ import MapKit
 // Основное представление экрана с картой и интерфейсом выбора локаций
 struct LocationsView: View {
     
-    // Модель состояния экрана, предоставляемая через Environment
-    // Хранит список локаций, выбранную локацию, текущий регион карты и флаги UI
+    
     @Environment(LocationsViewModel.self) private var vm: LocationsViewModel
     // Локальное состояние положения камеры карты (центр/масштаб/угол)
     // Используется для программного управления картой через SwiftUI Map
     @State private var cameraPosition: MapCameraPosition = .automatic
+    let maxWidthForIpda: CGFloat = 700
     
     var body: some View {
-        // ZStack: карта на заднем плане, поверх неё — заголовок и превью локации
+        
+        @Bindable var vm = vm
+        
         ZStack {
-            // Компонент карты, связанный с состоянием `cameraPosition`.
-            // Любое изменение `cameraPosition` программно обновит видимую область карты.
-            // Карту растягиваем на весь экран и отключаем безопасные области, чтобы она была под всем контентом.
-            Map(position: $cameraPosition)
-                .ignoresSafeArea()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                // При появлении экрана устанавливаем начальный регион карты из модели `vm.mapRegion`
-                .onAppear {
-                    cameraPosition = .region(vm.mapRegion)
-                }
-                // Следим за изменениями региона карты из модели.
-                // Оборачиваем `MKCoordinateRegion` во вспомогательную структуру `RegionProxy`,
-                // чтобы обеспечить корректное сравнение (Equatable) и триггерить обновления при изменениях центра/спана.
-                // При изменении плавно анимируем перемещение камеры к новому региону.
-                .onChange(of: RegionProxy(vm.mapRegion)) { _, _ in
-                    withAnimation(.easeInOut) {
-                        cameraPosition = .region(vm.mapRegion)
-                    }
-                }
-            
-            // Вертикальный стек: сверху — заголовок с кнопкой и (опционально) списком,
-            // снизу — превью текущей выбранной локации поверх карты
+            mapLayer
+           
             VStack (spacing: 0) {
                 
                 // Заголовок с кнопкой раскрытия списка локаций и текущим названием
                 header
                     .padding()
+                    .frame(maxWidth: maxWidthForIpda)
                 
                 Spacer()
                 
-                // Контейнер для показа превью выбранной локации. Показываем только одну — текущую `vm.mapLocation`.
-                ZStack {
-                    ForEach(vm.locations) { location in
-                        // Отрисовываем превью только для текущей выбранной локации.
-                        // Используем асимметричный переход при смене локаций (справа налево).
-                        if vm.mapLocation == location {
-                            LocationPreviewView(location: location)
-                                .shadow(color: .black.opacity(0.3), radius: 20)
-                                .padding()
-                                .transition(.asymmetric(
-                                    insertion: .move(edge: .trailing),
-                                    removal: .move(edge: .leading)))
+                locationsPreviewStack
+            }
+        }
+        .fullScreenCover(item: $vm.sheetLocation, onDismiss: nil) { location in
+            LocationDetailView(location: location)
+        }
+    }
+    
+    private var mapLayer: some View {
+        Map(position: $cameraPosition) {
+            ForEach(vm.locations) { location in
+                Annotation(location.name, coordinate: location.coordinates) {
+                    LocationMapAnnotationView()
+                        .scaleEffect(vm.mapLocation == location ? 1 : 0.7)
+                        .shadow(radius: 10)
+                        .onTapGesture {
+                            vm.showNextLocation(location: location)
                         }
-                    }
                 }
             }
         }
-        
+        .ignoresSafeArea()
+        .onAppear {
+            let center = vm.mapRegion.center
+            let closeSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+            let closeRegion = MKCoordinateRegion(center: center, span: closeSpan)
+            cameraPosition = .region(closeRegion)
+        }
+        .onChange(of: RegionProxy(vm.mapRegion)) { _, _ in
+            withAnimation(.easeInOut) {
+                let center = vm.mapRegion.center
+                let closeSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+                let closeRegion = MKCoordinateRegion(center: center, span: closeSpan)
+                cameraPosition = .region(closeRegion)
+            }
+        }
+    }
+    private var locationsPreviewStack: some View {
+        ZStack {
+            ForEach(vm.locations) { location in
+                if vm.mapLocation == location {
+                    LocationPreviewView(location: location)
+                        .shadow(color: .black.opacity(0.3), radius: 20)
+                        .padding()
+                        .frame(maxWidth: maxWidthForIpda)
+                        .frame(maxWidth: .infinity)
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing),
+                            removal: .move(edge: .leading)))
+                }
+            }
+        }
     }
 }
 
@@ -112,14 +132,14 @@ extension LocationsView {
                 Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
                     .font(.title2)
                     .fontWeight(.black)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.wOne)
                     .frame(height: 55)
                     .frame(maxWidth: .infinity)
                     .overlay(alignment: .leading) {
                         // Иконка стрелки слева. Поворачивается на 180° при раскрытом списке
                         Image(systemName: "arrow.down")
                             .font(.headline)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.wOne)
                             .padding()
                             .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
                     }
@@ -131,9 +151,9 @@ extension LocationsView {
             }
             
         }
-        // Стиль фона и оформления заголовка: материал, скругления и тень
-        .background(.thickMaterial)
+        .background(.thinMaterial)
         .cornerRadius(20)
         .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 15)
     }
 }
+
